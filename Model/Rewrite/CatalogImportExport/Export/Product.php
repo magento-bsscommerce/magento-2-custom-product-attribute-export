@@ -39,6 +39,7 @@ class Product extends \Magento\CatalogImportExport\Model\Export\Product
             $attr = $config->getValue('customproductattributeexport/configuration/allowedattribute');
             $merge = explode(',', $attr);
         }
+
         if (!$this->_headerColumns) {
             $customOptCols = [
                 'custom_options',

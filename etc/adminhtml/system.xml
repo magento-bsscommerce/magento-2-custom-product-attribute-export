@@ -40,7 +40,7 @@
 				<label>Configuration</label>
 				<field id="enable" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
 					<label>Enable Module</label>
-					<comment><![CDATA[Version 1.0.1]]></comment>
+					<comment><![CDATA[Version 1.0.4]]></comment>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
 				<field id="allowedattribute" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="multiselect">
