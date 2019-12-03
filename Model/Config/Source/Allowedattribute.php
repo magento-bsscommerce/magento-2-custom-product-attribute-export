@@ -30,6 +30,7 @@ namespace Bss\CustomProductAttributeExport\Model\Config\Source;
 class Allowedattribute implements \Magento\Framework\Option\ArrayInterface
 {
     private $coll;
+    private $configFactory;
     protected $exportMainAttrCodes = [
         'sku',
         'attribute_set',
@@ -128,14 +129,19 @@ class Allowedattribute implements \Magento\Framework\Option\ArrayInterface
     ];
 
     public function __construct(
-        \Magento\Eav\Model\ResourceModel\Entity\Attribute\Collection $coll
+        \Magento\Eav\Model\ResourceModel\Entity\Attribute\Collection $coll,
+        \Magento\Eav\Model\ConfigFactory $configFactory
     ) {
         $this->coll = $coll;
+        $this->configFactory = $configFactory;
     }
 
     public function toOptionArray()
     {
-        $this->coll->addFieldToFilter(\Magento\Eav\Model\Entity\Attribute\Set::KEY_ENTITY_TYPE_ID, 4);
+        $entityTypeId = $this->configFactory->create()
+            ->getEntityType(\Magento\Catalog\Api\Data\ProductAttributeInterface::ENTITY_TYPE_CODE)
+            ->getEntityTypeId();
+        $this->coll->addFieldToFilter(\Magento\Eav\Model\Entity\Attribute\Set::KEY_ENTITY_TYPE_ID, $entityTypeId);
         $attrAll = $this->coll->load()->getItems();
         $array = [];
         foreach ($attrAll as $attribute) {
