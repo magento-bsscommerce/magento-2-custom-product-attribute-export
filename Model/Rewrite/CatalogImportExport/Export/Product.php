@@ -29,6 +29,12 @@ namespace Bss\CustomProductAttributeExport\Model\Rewrite\CatalogImportExport\Exp
 
 class Product extends \Magento\CatalogImportExport\Model\Export\Product
 {
+    /**
+     * Set header columns
+     *
+     * @param array $customOptionsData
+     * @param array $stockItemRows
+     */
     protected function setHeaderColumns($customOptionsData, $stockItemRows)
     {
         $config = \Magento\Framework\App\ObjectManager::getInstance()

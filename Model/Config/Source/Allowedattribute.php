@@ -29,8 +29,6 @@ namespace Bss\CustomProductAttributeExport\Model\Config\Source;
 
 class Allowedattribute implements \Magento\Framework\Option\ArrayInterface
 {
-    private $coll;
-    private $configFactory;
     protected $exportMainAttrCodes = [
         'sku',
         'attribute_set',
@@ -128,6 +126,22 @@ class Allowedattribute implements \Magento\Framework\Option\ArrayInterface
         'weight_type'
     ];
 
+    /**
+     * @var \Magento\Eav\Model\ResourceModel\Entity\Attribute\Collection
+     */
+    private $coll;
+
+    /**
+     * @var \Magento\Eav\Model\ConfigFactory
+     */
+    private $configFactory;
+
+    /**
+     * Allowedattribute constructor.
+     *
+     * @param \Magento\Eav\Model\ResourceModel\Entity\Attribute\Collection $coll
+     * @param \Magento\Eav\Model\ConfigFactory $configFactory
+     */
     public function __construct(
         \Magento\Eav\Model\ResourceModel\Entity\Attribute\Collection $coll,
         \Magento\Eav\Model\ConfigFactory $configFactory
@@ -136,6 +150,11 @@ class Allowedattribute implements \Magento\Framework\Option\ArrayInterface
         $this->configFactory = $configFactory;
     }
 
+    /**
+     * Options getter
+     *
+     * @return array
+     */
     public function toOptionArray()
     {
         $entityTypeId = $this->configFactory->create()
@@ -157,8 +176,20 @@ class Allowedattribute implements \Magento\Framework\Option\ArrayInterface
         return  $array;
     }
 
+    /**
+     * Get options in 'key-value' format
+     *
+     * @return array
+     */
     public function toArray()
     {
-        return ['yes' => __('yes'),'no' => __('?no')];
+        $options = $this->toOptionArray();
+        $return = [];
+
+        foreach ($options as $option) {
+            $return[$option['value']] = $option['label'];
+        }
+
+        return $return;
     }
 }
